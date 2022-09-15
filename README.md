@@ -1,2 +1,1 @@
-# VanshikaBhatiaPortfolioWebsite
-Portfolio website using R
+# Personal Portfolio
