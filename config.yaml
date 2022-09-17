@@ -67,7 +67,7 @@ params:
   tiles:
     enable: yes
     showcase:
-      - image: pic01.jpg
+      - image: Me.jpg
         subtitle: Who is Vanshika?
         title: About Me
         url: blogs/aliquam
