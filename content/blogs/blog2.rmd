@@ -5,7 +5,7 @@ categories:
 date: "2017-10-31T22:26:09-05:00"
 description: Ever wondered how long did people live in 1950s? Did the Life expectancy increase with development in healthcare or did decrease due the unhealthy lifestyle of prople and extrensic factors like pollution? 
 draft: false
-image: pic09.jpg
+image: lifexpblog.jpg
 keywords: ""
 slug: magna
 title: Life Expectancy over the years

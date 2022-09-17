@@ -5,7 +5,7 @@ categories:
 date: "2017-10-31T21:28:43-05:00"
 description: We explore the accustaion of pay discrimination against Omega Group. Is the pay discrimination based on the gender or are the promotions biased, which further affect the pay discrimination. Let's hear the story data tells us!
 draft: false
-image: pic10.jpg
+image: genderpayblog.jpg
 keywords: ""
 slug: ipsum
 title: Omega Group Pay Discrimination

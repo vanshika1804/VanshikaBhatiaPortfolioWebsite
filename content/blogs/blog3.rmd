@@ -5,7 +5,7 @@ categories:
 date: "2017-10-31T22:26:13-05:00"
 description: Let's analyse the voting patterns for Brexit and find what were the major factors affecting the vote. Were native citizens more likely to vote for the Brexit or it depended on the level of education? We will explore all these questions in our analysis.
 draft: false
-image: pic08.jpg
+image: brexitblog.jpg
 keywords: ""
 slug: tempus
 title: Brexit vote analysis
