@@ -55,56 +55,38 @@ params:
     button1:
       - name: Get Started
         url: blogs
-    button2:
-      - name: Log In
-        url: '#'
     links:
       - name: Home
         url: '#'
-      - name: Blogs
+      - name: My Story!
+        url: blogs/aliquam
+      - name: At a Glance!
         url: blogs
-      - name: Generic Blog
-        url: blogs/ipsum
-      - name: Elements
-        url: elements.html
     menu: Menu
-    subtitle: By HTML5 Up
-    title: Forty
+    title: Vanshika Bhatia
   tiles:
     enable: yes
     showcase:
       - image: pic01.jpg
-        subtitle: Ipsum Dolor Sit Amet
-        title: Aliquam
+        subtitle: Who is Vanshika?
+        title: About Me
         url: blogs/aliquam
       - image: pic02.jpg
-        subtitle: Feugiat Amet Tempus
-        title: Tempus
+        subtitle: Let's analyse the voting patterns for Brexit and find what were the major factors affecting the vote.
+        title: Brexit Vote Analysis
         url: blogs/tempus
       - image: pic03.jpg
-        subtitle: Lorem Etiam Nullam
-        title: Magna
+        subtitle: We explore the accustaion of pay discrimination against Omega Group. Let's hear the story data tells us!
+        title: Omega Group Pay Discrimination
         url: blogs/magna
       - image: pic04.jpg
-        subtitle: Nisl Sed Aliquam
-        title: Ipsum
+        subtitle: Ever wondered how long did people live in 1950s? Did the Life expectancy increase with development in healthcare or did decrease due the unhealthy lifestyle of prople and extrensic factors like pollution?
+        title: Life Expectancy over the years!
         url: blogs/ipsum
-      - image: pic05.jpg
-        subtitle: Ipsum Dolor Sit Amet
-        title: Consequat
-        url: blogs/ipsum
-      - image: pic06.jpg
-        subtitle: Feugiat Amet Tempus
-        title: Etiam
-        url: blogs/ipsum
+
   two:
     buttonText: Get Started
     enable: yes
-    subtitle: "Nullam et orci eu lorem consequat tincidunt vivamus et sagittis libero.
-      \n    Mauris aliquet magna magna sed nunc rhoncus pharetra. \n    Pellentesque
-      condimentum sem. In efficitur ligula tate urna. Maecenas laoreet massa vel lacinia
-      pellentesque lorem ipsum dolor. \n    Nullam et orci eu lorem consequat tincidunt.
-      Vivamus et sagittis libero.\n    Mauris aliquet magna magna sed nunc rhoncus
-      amet pharetra et feugiat tempus."
-    title: Massa libero
+    subtitle: "Really grateful that you took out the time to check out my portfolio. You contact me through the links below. If you are interested in my work and would like to have a coffe chat about the projects or my experiences, hit me up!"
+    title: Thank you!
     url: blogs

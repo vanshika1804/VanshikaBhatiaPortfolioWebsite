@@ -3,10 +3,91 @@ categories:
 - ""
 - ""
 date: "2017-10-31T22:26:09-05:00"
-description: Lorem Etiam Nullam
+description: Ever wondered how long did people live in 1950s? Did the Life expectancy increase with development in healthcare or did decrease due the unhealthy lifestyle of prople and extrensic factors like pollution? 
 draft: false
 image: pic09.jpg
 keywords: ""
 slug: magna
-title: Magna
+title: Life Expectancy over the years
 ---
+
+
+You have seen the `gapminder` dataset that has data on life expectancy, population, and GDP per capita for 142 countries from 1952 to 2007. To get a glimpse of the dataframe, namely to see the variable names, variable types, etc., we use the `glimpse` function. We also want to have a look at the first 20 rows of data.
+
+```{r}
+glimpse(gapminder)
+
+head(gapminder, 20) # look at the first 20 rows of the dataframe
+
+```
+
+Your task is to produce two graphs of how life expectancy has changed over the years for the `country` and the `continent` you come from.
+
+I have created the `country_data` and `continent_data` with the code below.
+
+```{r}
+country_data <- gapminder %>% 
+            filter(country == "India") # just choosing Greece, as this is where I come from
+
+continent_data <- gapminder %>% 
+            filter(continent == "Asia")
+```
+
+First, create a plot of life expectancy over time for the single country you chose. Map `year` on the x-axis, and `lifeExp` on the y-axis. You should also use `geom_point()` to see the actual data points and `geom_smooth(se = FALSE)` to plot the underlying trendlines. You need to remove the comments **\#** from the lines below for your code to run.
+
+```{r, lifeExp_one_country}
+plot1 <- ggplot(data = country_data, mapping = aes(x = year, y = lifeExp))+
+    geom_point() +
+    geom_smooth(se = FALSE)+
+    NULL 
+
+plot1
+```
+
+Next we need to add a title. Create a new plot, or extend plot1, using the `labs()` function to add an informative title to the plot.
+
+```{r, lifeExp_one_country_with_label}
+plot1<- plot1 +
+    labs(title = "Life Expectancy of India over the years",
+        x = "Year",
+        y = "Life Expectancy of India") +
+    NULL
+
+
+plot1
+```
+
+Secondly, produce a plot for all countries in the *continent* you come from. (Hint: map the `country` variable to the colour aesthetic. You also want to map `country` to the `group` aesthetic, so all points for each country are grouped together).
+
+```{r lifeExp_one_continent}
+plot2 <- ggplot(continent_data, mapping = aes(x =  year, y =  lifeExp, colour= country, group=country))+
+   geom_point() + 
+   geom_smooth(se = FALSE) +
+   NULL
+
+plot2
+```
+
+Finally, using the original `gapminder` data, produce a life expectancy over time graph, grouped (or faceted) by continent. We will remove all legends, adding the `theme(legend.position="none")` in the end of our ggplot.
+
+```{r lifeExp_facet_by_continent}
+plot3 <- ggplot(data = gapminder , mapping = aes(x = year , y =  lifeExp, colour= continent))+
+   geom_point() + 
+   geom_smooth(se = FALSE) +
+   facet_wrap(~continent) +
+   theme(legend.position="none") + #remove all legends
+   NULL
+
+plot3
+```
+
+Given these trends, what can you say about life expectancy since 1952? Again, don't just say what's happening in the graph. Tell some sort of story and speculate about the differences in the patterns.
+
+> Type your answer after this blockquote.
+
+In the last graph we observe that the though the life expectancy is increasing after 1952 for most of the continents, the rate of increase(change) in life expectancy is different for each country. 
+
+For example, for South Africa the life expectancy for the country increases in a linear pattern till mid 1980s owing to the continent's mineral wealth, which created a lot of jobs. As a result of this economic stability people could afford better healthcare and live longer. In the mid 1980s, South Africa's economy was hit hard by oil crisis, followed by a time of violence as the country came dangerously close to civil war. These factors led to constant life expectancy post 1980s.
+
+Also, we can notice that the increase in the life expectancy over the past 60 years is the least for oceania, that is 10 years, as compared to the average 20 year increase in life expectancy for all the other continents. The above might also be due to the fact that oceania already started with a really high life expectancy of 70 in 1952 and then converged to a life expectancy of 80, which is also the maximum average life expectancy for any continent.
+
