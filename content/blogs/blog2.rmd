@@ -14,6 +14,13 @@ title: Life Expectancy over the years
 
 You have seen the `gapminder` dataset that has data on life expectancy, population, and GDP per capita for 142 countries from 1952 to 2007. To get a glimpse of the dataframe, namely to see the variable names, variable types, etc., we use the `glimpse` function. We also want to have a look at the first 20 rows of data.
 
+```{r load-libraries, warning=FALSE, message=FALSE, echo=FALSE}
+library(tidyverse)  # Load ggplot2, dplyr, and all the other tidyverse packages
+library(gapminder)  # gapminder dataset
+library(here)
+library(janitor)
+```
+
 ```{r}
 glimpse(gapminder)
 
@@ -81,9 +88,6 @@ plot3 <- ggplot(data = gapminder , mapping = aes(x = year , y =  lifeExp, colour
 plot3
 ```
 
-Given these trends, what can you say about life expectancy since 1952? Again, don't just say what's happening in the graph. Tell some sort of story and speculate about the differences in the patterns.
-
-> Type your answer after this blockquote.
 
 In the last graph we observe that the though the life expectancy is increasing after 1952 for most of the continents, the rate of increase(change) in life expectancy is different for each country. 
 

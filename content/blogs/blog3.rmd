@@ -93,9 +93,5 @@ ggplot(brexit_results, aes(x = born_in_uk, y = leave_share)) +
 
 You have the code for the plots, I would like you to revisit all of them and use the `labs()` function to add an informative title, subtitle, and axes titles to all plots.
 
-What can you say about the relationship shown above? Again, don't just say what's happening in the graph. Tell some sort of story and speculate about the differences in the patterns.
-
-> Type your answer after, and outside, this blockquote.
-
 From the above graph using the smooth line we can infer that leave share increases with the increase in the fraction of people born in UK in a constituency. As leave share is an indication of the fraction of people who want UK to leave EU in a given constituency, and leaving EU would distance UK from the open border policies of EU. 
 Hence, the constituencies with higher fraction of citizens born in UK have a higher probability of supporting Brexit, as compared to constituencies with higher number of immigrants. Also, for the immigrants Brexit means that the EU open border policies no longer apply to UK, causing an inconvenience for immigrants. Hence, constituencies with higher fraction of immigrants are less likely to vote in favor of Brexit.
