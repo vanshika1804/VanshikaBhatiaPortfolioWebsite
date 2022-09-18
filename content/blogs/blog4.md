@@ -28,6 +28,17 @@ Before coming to London for MAM, I was working at **JPMorgan & Chase** as a *Qua
 
 ![](https://blog.optimalworkshop.com/wp-content/uploads/2020/03/A-beginners-guide-to-qualitative-and-quantitative-research.png)
 
+## London Business School
+
+I have recently joined **Masters in Analytics and Management** at London Business School. I am excited to learn the business aspect of everything.
+
+I look forward to studying the following subjects at LBS:
+  + Negotiations
+  + Entrepreneurship
+  + Financial Modeling
+  + Corporate Finance
+
+![](https://www.ilwindia.com/wp-content/uploads/2019/07/London-Business-School.jpg)
 
 ## F1
 
