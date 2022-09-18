@@ -1,0 +1,188 @@
+---
+categories:
+  - ""
+  - ""
+date: "2017-10-31T21:28:43-05:00"
+description: We explore the accustaion of pay discrimination against Omega Group. Is the pay discrimination based on the gender or are the promotions biased, which further affect the pay discrimination. Let's hear the story data tells us!
+draft: false
+image: genderpayblog.jpg
+keywords: ""
+slug: ipsum
+title: Omega Group Pay Discrimination
+---
+
+
+
+<p>At the last board meeting of Omega Group Plc., the headquarters of a large multinational company, the issue was raised that women were being discriminated in the company, in the sense that the salaries were not the same for male and female executives. A quick analysis of a sample of 50 employees (of which 24 men and 26 women) revealed that the average salary for men was about 8,700 higher than for women. This seemed like a considerable difference, so it was decided that a further analysis of the company salaries was warranted.</p>
+<p>You are asked to carry out the analysis. The objective is to find out whether there is indeed a significant difference between the salaries of men and women, and whether the difference is due to discrimination or whether it is based on another, possibly valid, determining factor.</p>
+<div id="loading-the-data" class="section level2">
+<h2>Loading the data</h2>
+<pre class="r"><code>omega &lt;- read_csv(here::here(&quot;data&quot;, &quot;omega.csv&quot;))
+glimpse(omega) # examine the data frame</code></pre>
+<pre><code>## Rows: 50
+## Columns: 3
+## $ salary     &lt;dbl&gt; 81894, 69517, 68589, 74881, 65598, 76840, 78800, 70033, 635…
+## $ gender     &lt;chr&gt; &quot;male&quot;, &quot;male&quot;, &quot;male&quot;, &quot;male&quot;, &quot;male&quot;, &quot;male&quot;, &quot;male&quot;, &quot;ma…
+## $ experience &lt;dbl&gt; 16, 25, 15, 33, 16, 19, 32, 34, 1, 44, 7, 14, 33, 19, 24, 3…</code></pre>
+</div>
+<div id="relationship-salary---gender" class="section level2">
+<h2>Relationship Salary - Gender ?</h2>
+<p>The data frame <code>omega</code> contains the salaries for the sample of 50 executives in the company.</p>
+<pre class="r"><code>mosaic::favstats (salary ~ gender, data=omega)</code></pre>
+<pre><code>##   gender   min    Q1 median    Q3   max  mean   sd  n missing
+## 1 female 47033 60338  64618 70033 78800 64543 7567 26       0
+## 2   male 54768 68331  74675 78568 84576 73239 7463 24       0</code></pre>
+<pre class="r"><code>salary_gender &lt;- omega %&gt;%
+  group_by(gender) %&gt;%
+  summarise(mean_salary = mean(salary), 
+              sd_salary = sd(salary), 
+              count = n(), 
+              t_value = qt(p=0.05, df=48),
+              standard_error = sd_salary/sqrt(count), 
+              margin_of_error = t_value * standard_error,
+              low_salary= mean_salary - margin_of_error,
+              high_salary = mean_salary + margin_of_error) 
+ salary_gender</code></pre>
+<pre><code>## # A tibble: 2 × 9
+##   gender mean_salary sd_salary count t_value standard_…¹ margi…² low_s…³ high_…⁴
+##   &lt;chr&gt;        &lt;dbl&gt;     &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt;       &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+## 1 female      64543.     7567.    26   -1.68       1484.  -2489.  67032.  62054.
+## 2 male        73239.     7463.    24   -1.68       1523.  -2555.  75794.  70684.
+## # … with abbreviated variable names ¹​standard_error, ²​margin_of_error,
+## #   ³​low_salary, ⁴​high_salary</code></pre>
+<div id="conclusion-gender-vs-salary-1" class="section level4">
+<h4>Conclusion: Gender vs Salary (1)</h4>
+<p>The mean salary for men is higher than women, the difference is significant for the whole population because their respective 95% confidence intervals do not overlap.</p>
+</div>
+<div id="hypothesis-testing" class="section level3">
+<h3>Hypothesis testing</h3>
+<pre class="r"><code>t.test(salary ~ gender, data=omega)</code></pre>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  salary by gender
+## t = -4, df = 48, p-value = 2e-04
+## alternative hypothesis: true difference in means between group female and group male is not equal to 0
+## 95 percent confidence interval:
+##  -12973  -4420
+## sample estimates:
+## mean in group female   mean in group male 
+##                64543                73239</code></pre>
+<pre class="r"><code>set.seed(1234)
+salary_gender_infer &lt;- omega %&gt;%
+  specify(salary ~ gender) %&gt;%
+  hypothesize(null = &quot;independence&quot;) %&gt;%
+  generate(reps = 1000, type = &quot;permute&quot;) %&gt;%
+  calculate(stat = &quot;diff in means&quot;, order = c(&quot;male&quot;, &quot;female&quot;))
+
+
+observed_difference &lt;- omega %&gt;%
+  specify(salary ~ gender) %&gt;%
+  calculate(&quot;diff in means&quot;, order = c(&quot;male&quot;, &quot;female&quot;))
+observed_difference</code></pre>
+<pre><code>## Response: salary (numeric)
+## Explanatory: gender (factor)
+## # A tibble: 1 × 1
+##    stat
+##   &lt;dbl&gt;
+## 1 8696.</code></pre>
+<pre class="r"><code>salary_gender_infer %&gt;% 
+  visualize()</code></pre>
+<p><img src="/blogs/blog1_files/figure-html/hypothesis_testing-1.png" width="648" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>salary_gender_infer  %&gt;%
+  get_pvalue(obs_stat = observed_difference, direction = &#39;both&#39; ) %&gt;%
+  unlist()</code></pre>
+<pre><code>## p_value 
+##       0</code></pre>
+<div id="conclusion-gender-vs-salary-2" class="section level4">
+<h4>Conclusion: Gender vs Salary (2)</h4>
+<p>The t-test shows that the absolute value of the t-value is 4, which is higher than the critical value of 1.96, therefore we reject our null and can conclude that there is a significant statistical difference between male and female salaries.</p>
+<p>The p-value we obtain using the infer package is practically 0, R displays a warning message that it is an approximation based the number of repetitions chosen. We can conclude that there is a significant statistical difference between the salaries of men and women.</p>
+</div>
+</div>
+</div>
+<div id="relationship-experience---gender" class="section level2">
+<h2>Relationship Experience - Gender?</h2>
+<pre class="r"><code>favstats (experience ~ gender, data=omega)</code></pre>
+<pre><code>##   gender min    Q1 median   Q3 max  mean    sd  n missing
+## 1 female   0  0.25    3.0 14.0  29  7.38  8.51 26       0
+## 2   male   1 15.75   19.5 31.2  44 21.12 10.92 24       0</code></pre>
+<pre class="r"><code>experience_gender &lt;- omega %&gt;%
+  group_by(gender) %&gt;%
+  summarise(mean_experience = mean(experience), 
+              sd_experience = sd(experience), 
+              count = n(), 
+              t_value = qt(p=0.05, df=48),
+              standard_error = sd(experience)/sqrt(count), 
+              margin_of_error = t_value * standard_error,
+              low_salary= mean_experience - margin_of_error,
+              high_salary = mean_experience + margin_of_error) 
+ experience_gender</code></pre>
+<pre><code>## # A tibble: 2 × 9
+##   gender mean_experience sd_expe…¹ count t_value stand…² margi…³ low_s…⁴ high_…⁵
+##   &lt;chr&gt;            &lt;dbl&gt;     &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+## 1 female            7.38      8.51    26   -1.68    1.67   -2.80    10.2    4.58
+## 2 male             21.1      10.9     24   -1.68    2.23   -3.74    24.9   17.4 
+## # … with abbreviated variable names ¹​sd_experience, ²​standard_error,
+## #   ³​margin_of_error, ⁴​low_salary, ⁵​high_salary</code></pre>
+<pre class="r"><code> t.test(experience ~ gender, data = omega)</code></pre>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  experience by gender
+## t = -5, df = 43, p-value = 1e-05
+## alternative hypothesis: true difference in means between group female and group male is not equal to 0
+## 95 percent confidence interval:
+##  -19.35  -8.13
+## sample estimates:
+## mean in group female   mean in group male 
+##                 7.38                21.12</code></pre>
+<pre class="r"><code>set.seed(1234)
+experience_gender_infer &lt;- omega %&gt;%
+  specify(experience ~ gender) %&gt;%
+  hypothesize(null = &quot;independence&quot;) %&gt;%
+  generate(reps = 1000, type = &quot;permute&quot;) %&gt;%
+  calculate(stat = &quot;diff in means&quot;, order = c(&quot;male&quot;, &quot;female&quot;))
+
+experience_gender_infer %&gt;% visualize()</code></pre>
+<p><img src="/blogs/blog1_files/figure-html/experience_stats-1.png" width="648" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>observed_diff &lt;- omega %&gt;%
+  specify(salary ~ gender) %&gt;%
+  calculate(&quot;diff in means&quot;, order = c(&quot;male&quot;, &quot;female&quot;))
+observed_diff</code></pre>
+<pre><code>## Response: salary (numeric)
+## Explanatory: gender (factor)
+## # A tibble: 1 × 1
+##    stat
+##   &lt;dbl&gt;
+## 1 8696.</code></pre>
+<pre class="r"><code>experience_gender_infer %&gt;%
+  get_pvalue(obs_stat = observed_diff, direction = &#39;both&#39; ) %&gt;%
+  unlist()</code></pre>
+<pre><code>## p_value 
+##       0</code></pre>
+<p>Based on this evidence, can you conclude that there is a significant difference between the experience of the male and female executives? Perform similar analyses as in the previous section. Does your conclusion validate or endanger your conclusion about the difference in male and female salaries?</p>
+<div id="conclusion-gender-vs-experience" class="section level3">
+<h3>Conclusion: Gender vs Experience</h3>
+<p>The sample shows men have an average of 21.12 years of experience whereas women only have an average of 7.38 years. Further investigation reveals a significant statistical difference between gender and experience; their respective 95% confidence intervals do not overlap. Secondly, the t-value (absolute) is 5 is a lot higher than 1.96 therefore we reject our null hypothesis which stated there was no difference between gender and experience. The p-value of 0.00001 is well below 5% which corroborates the claim that there is a true difference in means of years of experience between men and women.</p>
+<p>This conclusion certailny endangers the previous conclusion about difference in male and female salaries since it provides another explanation for the differences in salaries which needs to be taken into account.</p>
+</div>
+</div>
+<div id="relationship-salary---experience" class="section level2">
+<h2>Relationship Salary - Experience ?</h2>
+<pre class="r"><code>ggplot(omega, aes( x = experience, y = salary)) + 
+  geom_point()</code></pre>
+<p><img src="/blogs/blog1_files/figure-html/salary_exp_scatter-1.png" width="648" style="display: block; margin: auto;" /></p>
+</div>
+<div id="check-correlations-between-the-data" class="section level2">
+<h2>Check correlations between the data</h2>
+<pre class="r"><code>omega %&gt;% 
+  select(gender, experience, salary) %&gt;% #order variables they will appear in ggpairs()
+  ggpairs(aes(colour=gender, alpha = 0.3))+
+  theme_bw()</code></pre>
+<p><img src="/blogs/blog1_files/figure-html/ggpairs-1.png" width="648" style="display: block; margin: auto;" /></p>
+<div id="conclusion-salary-vs-experience" class="section level4">
+<h4>Conclusion: Salary vs Experience</h4>
+<p>The salary vs experience scatteplot shows a positive correlation between experience and salary in this sample. We previously concluded that the true mean salary of men is higher than women and also that the true mean years of experience is higher for men. Therefore a very plausible explanation for the higher salary of men is simply due to a higher number of years of experience. We cannot attribute the higher salary solely to gender without taking into consideration experience. It’s therefore hard to tell if there are (if any) differences in salary that are only based on gender. A useful analysis would be to analyze the difference in salary for men and women with the exact same years of experience, even in such analysis there could be other factors at play such as role, performance, etc..</p>
+</div>
+</div>

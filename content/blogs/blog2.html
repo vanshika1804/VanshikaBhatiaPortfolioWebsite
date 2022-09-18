@@ -1,0 +1,95 @@
+---
+categories:
+  - ""
+  - ""
+date: "2017-10-31T22:26:09-05:00"
+description: Ever wondered how long did people live in 1950s? Did the Life expectancy increase with development in healthcare or did decrease due the unhealthy lifestyle of prople and extrensic factors like pollution? 
+draft: false
+image: lifexpblog.jpg
+keywords: ""
+slug: magna
+title: Life Expectancy over the years
+---
+
+
+
+<p>You have seen the <code>gapminder</code> dataset that has data on life expectancy, population, and GDP per capita for 142 countries from 1952 to 2007. To get a glimpse of the dataframe, namely to see the variable names, variable types, etc., we use the <code>glimpse</code> function. We also want to have a look at the first 20 rows of data.</p>
+<pre class="r"><code>glimpse(gapminder)</code></pre>
+<pre><code>## Rows: 1,704
+## Columns: 6
+## $ country   &lt;fct&gt; &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, &quot;Afghanistan&quot;, …
+## $ continent &lt;fct&gt; Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, Asia, …
+## $ year      &lt;int&gt; 1952, 1957, 1962, 1967, 1972, 1977, 1982, 1987, 1992, 1997, …
+## $ lifeExp   &lt;dbl&gt; 28.8, 30.3, 32.0, 34.0, 36.1, 38.4, 39.9, 40.8, 41.7, 41.8, …
+## $ pop       &lt;int&gt; 8425333, 9240934, 10267083, 11537966, 13079460, 14880372, 12…
+## $ gdpPercap &lt;dbl&gt; 779, 821, 853, 836, 740, 786, 978, 852, 649, 635, 727, 975, …</code></pre>
+<pre class="r"><code>head(gapminder, 20) # look at the first 20 rows of the dataframe</code></pre>
+<pre><code>## # A tibble: 20 × 6
+##    country     continent  year lifeExp      pop gdpPercap
+##    &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+##  1 Afghanistan Asia       1952    28.8  8425333      779.
+##  2 Afghanistan Asia       1957    30.3  9240934      821.
+##  3 Afghanistan Asia       1962    32.0 10267083      853.
+##  4 Afghanistan Asia       1967    34.0 11537966      836.
+##  5 Afghanistan Asia       1972    36.1 13079460      740.
+##  6 Afghanistan Asia       1977    38.4 14880372      786.
+##  7 Afghanistan Asia       1982    39.9 12881816      978.
+##  8 Afghanistan Asia       1987    40.8 13867957      852.
+##  9 Afghanistan Asia       1992    41.7 16317921      649.
+## 10 Afghanistan Asia       1997    41.8 22227415      635.
+## 11 Afghanistan Asia       2002    42.1 25268405      727.
+## 12 Afghanistan Asia       2007    43.8 31889923      975.
+## 13 Albania     Europe     1952    55.2  1282697     1601.
+## 14 Albania     Europe     1957    59.3  1476505     1942.
+## 15 Albania     Europe     1962    64.8  1728137     2313.
+## 16 Albania     Europe     1967    66.2  1984060     2760.
+## 17 Albania     Europe     1972    67.7  2263554     3313.
+## 18 Albania     Europe     1977    68.9  2509048     3533.
+## 19 Albania     Europe     1982    70.4  2780097     3631.
+## 20 Albania     Europe     1987    72    3075321     3739.</code></pre>
+<p>Your task is to produce two graphs of how life expectancy has changed over the years for the <code>country</code> and the <code>continent</code> you come from.</p>
+<p>I have created the <code>country_data</code> and <code>continent_data</code> with the code below.</p>
+<pre class="r"><code>country_data &lt;- gapminder %&gt;% 
+            filter(country == &quot;India&quot;) # just choosing Greece, as this is where I come from
+
+continent_data &lt;- gapminder %&gt;% 
+            filter(continent == &quot;Asia&quot;)</code></pre>
+<p>First, create a plot of life expectancy over time for the single country you chose. Map <code>year</code> on the x-axis, and <code>lifeExp</code> on the y-axis. You should also use <code>geom_point()</code> to see the actual data points and <code>geom_smooth(se = FALSE)</code> to plot the underlying trendlines. You need to remove the comments <strong>#</strong> from the lines below for your code to run.</p>
+<pre class="r"><code>plot1 &lt;- ggplot(data = country_data, mapping = aes(x = year, y = lifeExp))+
+    geom_point() +
+    geom_smooth(se = FALSE)+
+    NULL 
+
+plot1</code></pre>
+<p><img src="/blogs/blog2_files/figure-html/lifeExp_one_country-1.png" width="648" style="display: block; margin: auto;" /></p>
+<p>Next we need to add a title. Create a new plot, or extend plot1, using the <code>labs()</code> function to add an informative title to the plot.</p>
+<pre class="r"><code>plot1&lt;- plot1 +
+    labs(title = &quot;Life Expectancy of India over the years&quot;,
+        x = &quot;Year&quot;,
+        y = &quot;Life Expectancy of India&quot;) +
+    NULL
+
+
+plot1</code></pre>
+<p><img src="/blogs/blog2_files/figure-html/lifeExp_one_country_with_label-1.png" width="648" style="display: block; margin: auto;" /></p>
+<p>Secondly, produce a plot for all countries in the <em>continent</em> you come from. (Hint: map the <code>country</code> variable to the colour aesthetic. You also want to map <code>country</code> to the <code>group</code> aesthetic, so all points for each country are grouped together).</p>
+<pre class="r"><code>plot2 &lt;- ggplot(continent_data, mapping = aes(x =  year, y =  lifeExp, colour= country, group=country))+
+   geom_point() + 
+   geom_smooth(se = FALSE) +
+   NULL
+
+plot2</code></pre>
+<p><img src="/blogs/blog2_files/figure-html/lifeExp_one_continent-1.png" width="648" style="display: block; margin: auto;" /></p>
+<p>Finally, using the original <code>gapminder</code> data, produce a life expectancy over time graph, grouped (or faceted) by continent. We will remove all legends, adding the <code>theme(legend.position="none")</code> in the end of our ggplot.</p>
+<pre class="r"><code>plot3 &lt;- ggplot(data = gapminder , mapping = aes(x = year , y =  lifeExp, colour= continent))+
+   geom_point() + 
+   geom_smooth(se = FALSE) +
+   facet_wrap(~continent) +
+   theme(legend.position=&quot;none&quot;) + #remove all legends
+   NULL
+
+plot3</code></pre>
+<p><img src="/blogs/blog2_files/figure-html/lifeExp_facet_by_continent-1.png" width="648" style="display: block; margin: auto;" /></p>
+<p>In the last graph we observe that the though the life expectancy is increasing after 1952 for most of the continents, the rate of increase(change) in life expectancy is different for each country.</p>
+<p>For example, for South Africa the life expectancy for the country increases in a linear pattern till mid 1980s owing to the continent’s mineral wealth, which created a lot of jobs. As a result of this economic stability people could afford better healthcare and live longer. In the mid 1980s, South Africa’s economy was hit hard by oil crisis, followed by a time of violence as the country came dangerously close to civil war. These factors led to constant life expectancy post 1980s.</p>
+<p>Also, we can notice that the increase in the life expectancy over the past 60 years is the least for oceania, that is 10 years, as compared to the average 20 year increase in life expectancy for all the other continents. The above might also be due to the fact that oceania already started with a really high life expectancy of 70 in 1952 and then converged to a life expectancy of 80, which is also the maximum average life expectancy for any continent.</p>
