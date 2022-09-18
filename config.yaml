@@ -71,6 +71,10 @@ params:
         subtitle: Who is Vanshika?
         title: About Me
         url: blogs/aliquam
+      - image: resume.jpg
+        subtitle: All my experiences in a page :)
+        title: Resume
+        url: blogs/resume
       - image: brexit1.jpg
         subtitle: Let's analyse the voting patterns for Brexit and find what were the major factors affecting the vote.
         title: Brexit Vote Analysis
@@ -83,10 +87,7 @@ params:
         subtitle: Ever wondered how long did people live in 1950s? Did the Life expectancy increase with development in healthcare or did decrease due the unhealthy lifestyle of prople and extrensic factors like pollution?
         title: Life Expectancy over the years!
         url: blogs/ipsum
-      - image: resume.jpg
-        subtitle: All my experiences in a page :)
-        title: Resume
-        url: blogs/resume
+
 
   two:
     buttonText: Get Started
