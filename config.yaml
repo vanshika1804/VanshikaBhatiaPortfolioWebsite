@@ -10,7 +10,7 @@ params:
     subtitle: |-
       WELCOME TO MY PORTFOLIO.
     title: Hi, my name is VANSHIKA BHATIA!
-  blog: {}
+  blog:
   contact:
     address:
       - city: LONDON
@@ -40,9 +40,9 @@ params:
 #      - icon: fa-facebook
 #        label: Facebook
 #        url: https://www.facebook.com
-#      - icon: fa-instagram
-#        label: Instagram
-#        url: https://www.instagram.com
+      - icon: fa-instagram
+        label: Instagram
+        url: https://www.instagram.com/vanshikabhatia_1804/
       - icon: fa-github
         label: GitHub
         url: https://github.com/vanshika1804
